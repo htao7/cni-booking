@@ -1,0 +1,10 @@
+#Please write in following format, each day in a line, without #
+#Format: DDD xx:aa yy:bb 
+#DDD = Mon/Tue/Wed/Thu/Fri/Sat/Sun 
+#08 < xx/yy < 23 
+#aa,bb = 00/30
+
+huachen.tao@mail.utoronto.ca
+Tue 08:00 15:00
+
+Fri 10:30 23:00
