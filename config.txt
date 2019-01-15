@@ -1,7 +1,7 @@
 #Please write in following format, each day in a line, without #
 #email address
 #DDD xx:aa yy:bb 
-#(DDD = Mon/Tue/Wed/Thu/Fri/Sat/Sun )
+#(DDD = Mon/Tue/Wed/Thu/Fri/Sat/Sun)
 #(08 < xx/yy < 23)
 #(aa,bb = 00/30)
 
