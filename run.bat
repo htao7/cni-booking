@@ -2,5 +2,5 @@
 :loop                               
 python booking.py
 
-timeout /t 600 /nobreak
+timeout /t 900 /nobreak
 goto loop
