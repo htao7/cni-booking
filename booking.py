@@ -11,13 +11,12 @@ def SendEmail(receiver_email,day,message_change_time):
     sender_email = "ekg.uoft@gmail.com"
     password = 'xxxxxxx'
     message = """\
-    SEM schedule changed. 
-
     ESEM schedule changed on %s.
+    
     Check at http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM. Close the program when not using.
     """ % day_dic_inv[day]
 
-    message += "\n" + message_change_time
+    message += "\n%s:" % day_dic_inv[day] + message_change_time
     
     server.starttls()
     server.login(sender_email, password)
