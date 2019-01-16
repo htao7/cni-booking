@@ -13,7 +13,7 @@ def SendEmail(receiver_email,day,message_change_time):
     message = """\
     SEM schedule changed. 
 
-    Someone changed the schedule on %s.
+    ESEM schedule changed on %s.
     Check at http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM. Close the program when not using.
     """ % day_dic_inv[day]
 
