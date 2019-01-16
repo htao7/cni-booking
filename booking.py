@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as bs
 import urllib.request as request
 import re
 import numpy as np
-import smtplib, ssl
+import smtplib
 
 # url = 'http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM'
 
