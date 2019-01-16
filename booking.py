@@ -6,21 +6,46 @@ import smtplib, ssl
 
 # url = 'http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM'
 
-def SendEmail(receiver_email,day):
+def SendEmail(receiver_email,day,message_change_time):
     server = smtplib.SMTP("smtp.gmail.com",587)
-    sender_email = "xxxxxxxx"  
-    password = 'xxxxxxxx'
+    sender_email = "ekg.uoft@gmail.com"
+    password = 'core-shell'
     message = """\
     SEM schedule changed. 
 
-    Someone cancelled the booking on %s.
+    Someone changed the schedule on %s.
     Check at http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM. Close the program when not using.
     """ % day_dic_inv[day]
+
+    message += "\n" + message_change_time
     
     server.starttls()
     server.login(sender_email, password)
     server.sendmail(sender_email, receiver_email, message)
     server.quit()
+
+def ScheduleChange(changed_time,day,starttime,receiver_email):
+    message = ''
+    i = 0
+    while i < len(changed_time):
+        if changed_time[i] == 1:
+            changed_start = starttime + i
+            while (i < len(changed_time) and changed_time[i] == 1):
+                i += 1
+            changed_stop = starttime + i
+            message += "\n%02d:%02d - %02d:%02d is now booked" % (int(changed_start / 2) + 8,(changed_start % 2) * 30,int(changed_stop / 2) + 8,(changed_stop % 2) * 30)
+        elif changed_time[i] == 255:
+            changed_start = starttime + i
+            while (i < len(changed_time) and changed_time[i] == 255):
+                i += 1
+            changed_stop = starttime + i
+            message += "\n%02d:%02d - %02d:%02d is now vacant" % (int(changed_start / 2) + 8,(changed_start % 2) * 30,int(changed_stop / 2) + 8,(changed_stop % 2) * 30)
+        else:
+            i += 1
+    if message != '':
+        SendEmail(receiver_email,day,message)
+        print('email sent!')
+
 
 
 url = 'http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?CalendarName=ESEM__STEM&Op=ShowIt&Amount=Week&NavType=Absolute&Type=TimePlan&DayViewStart=8&DayViewHours=16&DayViewIncrement=2'
@@ -76,7 +101,6 @@ for i in range(len(day_track)):
     starttime = time_track[i][0]
     stoptime = time_track[i][1]
     changed_time = new_timetable[starttime:stoptime,day] - old_timetable[starttime:stoptime,day]
-    if 255 in changed_time:
-        SendEmail(receiver_email,day)
-        print ('changed')
+    ScheduleChange(changed_time,day,starttime,receiver_email)
+
 np.savetxt('old_timetable.txt', new_timetable, delimiter=',',fmt='%i')
