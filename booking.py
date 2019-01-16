@@ -10,13 +10,9 @@ def SendEmail(receiver_email,day,message_change_time):
     server = smtplib.SMTP("smtp.gmail.com",587)
     sender_email = "ekg.uoft@gmail.com"
     password = 'xxxxxxx'
-    message = """
-    ESEM schedule changed on %s.
-    
-    Check at http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM. Close the program when not using.
-    """ % day_dic_inv[day]
-
-    message += "\n%s:" % day_dic_inv[day] + message_change_time
+    message = "ESEM schedule changed on %s." % day_dic_inv[day]
+    message += "\n%s:" % day_dic_inv[day] + message_change_time + \
+               "\nCheck at http://www.chem.utoronto.ca/cgi-bin/Calcium40_cni.pl?Op=ShowIt&CalendarName=ESEM__STEM. Close the program when not using."
     
     server.starttls()
     server.login(sender_email, password)
